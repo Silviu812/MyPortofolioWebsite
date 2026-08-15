@@ -122,6 +122,8 @@ function Arrow({ diagonal = false }: { diagonal?: boolean }) {
 function SystemsVisual() {
   const bars = [42, 68, 31, 78, 55, 88, 36, 64, 47, 74, 29, 58];
   const voxels = Array.from({ length: 30 }, (_, index) => index);
+  const codeSignals = ["chunk.Generate(seed)", "if (risk <= limit)", "observe → model → test"];
+  const orderFlow = ["BID 28", "ASK 17", "BID 41", "ASK 22"];
 
   return (
     <div className="systems-visual" aria-label="Abstract visualization connecting a voxel grid with market depth">
@@ -130,21 +132,35 @@ function SystemsVisual() {
         <span>DETERMINISTIC STUDY</span>
       </div>
       <div className="visual-stage">
-        <div className="voxel-field" aria-hidden="true">
-          {voxels.map((index) => (
-            <span key={index} style={{ "--delay": `${(index % 7) * 0.08}s` } as React.CSSProperties} />
-          ))}
+        <div className="software-field" aria-hidden="true">
+          <div className="code-rail">
+            {codeSignals.map((signal, index) => <span key={signal}><i>0{index + 1}</i>{signal}</span>)}
+          </div>
+          <div className="voxel-field">
+            {voxels.map((index) => (
+              <span key={index} style={{ "--delay": `${(index % 7) * 0.08}s` } as React.CSSProperties} />
+            ))}
+          </div>
         </div>
         <div className="visual-axis"><span>MODEL</span><span>MEASURE</span></div>
-        <div className="depth-field" aria-hidden="true">
-          {bars.map((height, index) => (
-            <span key={index} className={index < 6 ? "bid" : "ask"} style={{ "--bar": `${height}%`, "--delay": `${index * 0.06}s` } as React.CSSProperties} />
-          ))}
+        <div className="market-field" aria-hidden="true">
+          <div className="order-tape">
+            {orderFlow.map((tick, index) => <span key={tick} style={{ "--tick-delay": `${index * 1.25}s` } as React.CSSProperties}>{tick}</span>)}
+          </div>
+          <div className="depth-field">
+            {bars.map((height, index) => (
+              <span key={index} className={index < 6 ? "bid" : "ask"} style={{ "--bar": `${height}%`, "--delay": `${index * 0.06}s` } as React.CSSProperties} />
+            ))}
+          </div>
+          <span className="market-sweep" />
+        </div>
+        <div className="signal-flow" aria-hidden="true">
+          {Array.from({ length: 6 }, (_, index) => <i key={index} style={{ "--flow-delay": `${index * 0.72}s` } as React.CSSProperties} />)}
         </div>
       </div>
       <div className="visual-foot">
         <span><i className="dot cyan" /> SOFTWARE STRUCTURE</span>
-        <span><i className="dot amber" /> MARKET STRUCTURE</span>
+        <span><i className="dot amber" /> SIMULATED ORDER FLOW</span>
       </div>
     </div>
   );
