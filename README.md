@@ -19,7 +19,18 @@ npm run build
 
 ## Cloudflare deployment
 
-The repository uses the included Sites/Vite configuration and is ready for a Cloudflare-backed deployment. Build first, then publish through the project’s Sites workflow. Connect `silviupopa.dev` after the deployment is created and DNS ownership is available.
+The default build creates both the Cloudflare Worker bundle used by Sites and a static Vite entry point for Cloudflare Pages.
+
+For a GitHub-connected Cloudflare Pages project use:
+
+```text
+Build command: npm run build
+Build output directory: dist
+Root directory: /
+Production branch: main
+```
+
+The included `wrangler.toml` declares the same `dist` output. Connect `silviupopa.dev` after the deployment succeeds and DNS ownership is available.
 
 ## Owner assets and facts still needed
 
