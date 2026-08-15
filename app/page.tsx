@@ -10,6 +10,7 @@ type Project = {
   technologies: string[];
   featured?: boolean;
   liveUrl?: string;
+  sourceUrl?: string;
   problem: string;
   built: string;
   contribution: string;
@@ -51,22 +52,23 @@ const researchThemes = [
 const performance = [
   { firm: "FundingPips", amount: "$25,257.60", note: "Verified performance payout", url: "https://app.fundingpips.com/certificates/verify/f31ed372-3bb4-4514-9212-60f7382e4a2c" },
   { firm: "Alpha Capital", amount: "$11,265", note: "Lifetime payouts" },
-  { firm: "FundedNext", amount: "$10,197.56", note: "Across two performance payouts" },
+  { firm: "FundedNext", amount: "$25K+", note: "Cumulative performance payouts" },
 ];
 
 const projects: Project[] = [
   {
     id: "voxel",
     eyebrow: "Bachelor’s thesis · 10/10",
-    title: "Procedural Voxel World",
-    summary: "A voxel-based world and gameplay prototype in C#, with global procedural generation, world interaction and custom systems for generating and managing voxel content.",
+    title: "3D Procedural Voxel Sandbox",
+    summary: "A flexible voxel engine built from scratch in C# and Unity, with deterministic terrain generation, chunk-based world management, face culling, mesh construction and real-time block interaction.",
     technologies: ["C#", "Unity", "OOP", "Algorithms", "Data structures"],
     featured: true,
-    problem: "Explore how a procedural world can be represented, generated and changed through a coherent set of gameplay systems.",
-    built: "A voxel-world prototype with procedural generation, interaction and custom content-management systems.",
-    contribution: "Designed and implemented the project as a Computer Science bachelor’s thesis, from system structure to the playable prototype.",
-    decisions: "Kept world content modular and modeled the project around explicit object responsibilities in C# and Unity.",
-    lessons: "Large procedural systems become tractable when generation, representation and player interaction are treated as separate concerns.",
+    sourceUrl: "https://github.com/Silviu812/PASCraft",
+    problem: "Build an extensible voxel engine capable of generating, rendering and modifying a large 3D sandbox world without treating millions of blocks as one monolithic structure.",
+    built: "A deterministic Perlin Noise terrain pipeline, 16×16×128 chunks, queued world generation, face culling, runtime mesh construction, texture-atlas mapping, raycast interaction and an eight-slot inventory.",
+    contribution: "Designed and implemented the complete project as a Computer Science bachelor’s thesis, from the data architecture and rendering pipeline to the playable prototype.",
+    decisions: "Separated voxel data, mesh construction and rendering responsibilities; retained chunk data while unloading its visual representation; exposed terrain and resource parameters for iteration without architectural changes.",
+    lessons: "Large procedural systems become tractable when generation, representation, rendering and player interaction are explicit, independent concerns.",
   },
   {
     id: "fleetops",
@@ -100,6 +102,7 @@ const projects: Project[] = [
     title: "Decentralized NFT Auction Marketplace",
     summary: "A decentralized auction marketplace prototype with smart-contract-based auction logic and a React transaction interface.",
     technologies: ["React", "JavaScript", "Solidity", "Hardhat"],
+    sourceUrl: "https://github.com/Silviu812/NFTRealm-Blockchain-Project",
     problem: "Model an auction lifecycle in smart contracts and make blockchain interactions understandable in a web interface.",
     built: "A prototype combining Solidity auction logic, Hardhat development tooling and a React interface for transactions.",
     contribution: "Developed the application flow across smart-contract and frontend layers.",
@@ -191,8 +194,6 @@ function CaseStudyDialog({ project, onClose }: { project: Project | null; onClos
       className="case-dialog"
       onClose={onClose}
       onCancel={(event) => { event.preventDefault(); onClose(); }}
-      onKeyDown={(event) => { if (event.key === "Escape") onClose(); }}
-      onClick={(event) => { if (event.target === ref.current) onClose(); }}
     >
       <div className="dialog-inner">
         <button className="dialog-close" onClick={onClose} aria-label="Close case study">Close <span aria-hidden="true">×</span></button>
@@ -209,7 +210,7 @@ function CaseStudyDialog({ project, onClose }: { project: Project | null; onClos
         </div>
         <div className="dialog-actions">
           {project.liveUrl && <a className="button primary" href={project.liveUrl} target="_blank" rel="noreferrer">View live project <Arrow diagonal /></a>}
-          <a className="button ghost" href="https://github.com/Silviu812" target="_blank" rel="noreferrer">GitHub profile <Arrow diagonal /></a>
+          {project.sourceUrl && <a className="button ghost" href={project.sourceUrl} target="_blank" rel="noreferrer">View source on GitHub <Arrow diagonal /></a>}
         </div>
       </div>
     </dialog>
@@ -232,8 +233,8 @@ export default function Home() {
       <nav className={`nav ${scrolled ? "scrolled" : ""}`} aria-label="Primary navigation">
         <a className="wordmark" href="#overview">Silviu Popa <span>SP / 26</span></a>
         <div className="nav-links">
-          <a href="#trading">Trading</a>
           <a href="#engineering">Engineering</a>
+          <a href="#trading">Trading</a>
           <a href="#about">About</a>
           <a href="https://github.com/Silviu812" target="_blank" rel="noreferrer">GitHub <Arrow diagonal /></a>
         </div>
@@ -242,8 +243,8 @@ export default function Home() {
       <section className="hero section-shell" id="overview">
         <div className="hero-grid">
           <div className="hero-copy">
-            <p className="eyebrow">COMPUTER SCIENCE · QUANTITATIVE RESEARCH · SOFTWARE ENGINEERING</p>
-            <h1>I build systems for <em>uncertain environments.</em></h1>
+            <p className="eyebrow">SOFTWARE ENGINEERING · COMPUTER SCIENCE · QUANTITATIVE RESEARCH</p>
+            <h1>Engineering systems for <em>uncertain environments.</em></h1>
             <p className="hero-lede">Computer Science graduate combining software engineering with independent quantitative research, market experience and disciplined risk management.</p>
             <div className="hero-actions">
               <a className="button primary" href="#engineering">Explore engineering work <Arrow /></a>
@@ -253,8 +254,12 @@ export default function Home() {
               <a href="https://github.com/Silviu812" target="_blank" rel="noreferrer">GitHub <Arrow diagonal /></a>
             </div>
           </div>
-          <SystemsVisual />
+          <figure className="hero-portrait">
+            <img src="/profile/silviu-popa-great-wall.webp" alt="Silviu Popa at the Great Wall of China" width="1200" height="1600" fetchPriority="high" />
+            <figcaption><span>SILVIU POPA</span><span>ENGINEER / RESEARCHER</span></figcaption>
+          </figure>
         </div>
+        <div className="hero-systems"><SystemsVisual /></div>
         <div className="status-strip">
           <span><small>BASE</small> Constanța, Romania</span>
           <span><small>MOBILITY</small> Open to international relocation</span>
@@ -269,7 +274,7 @@ export default function Home() {
         </div>
         <div className="discipline-grid">
           <article className="discipline-card market-card">
-            <div className="card-index">M / 01</div>
+            <div className="card-index">M / 02</div>
             <h3>Markets</h3>
             <p>Studying liquidity, order flow, probability and risk to form and test market hypotheses under uncertainty.</p>
             <ul>
@@ -277,7 +282,7 @@ export default function Home() {
             </ul>
           </article>
           <article className="discipline-card engineering-card">
-            <div className="card-index">E / 02</div>
+            <div className="card-index">E / 01</div>
             <h3>Engineering</h3>
             <p>Turning ambiguous ideas into working systems through algorithms, data structures, object-oriented design and iterative development.</p>
             <ul>
@@ -290,7 +295,7 @@ export default function Home() {
       <section className="trading section-pad" id="trading">
         <div className="section-shell">
           <div className="section-heading split-heading">
-            <div><p className="eyebrow amber-text">MARKET RESEARCH / 002</p><h2>Quantitative research<br />& trading</h2></div>
+            <div><p className="eyebrow amber-text">MARKET RESEARCH / 003</p><h2>Quantitative research<br />& trading</h2></div>
             <p>Independent research into how macro context, liquidity and order flow affect execution and short-term price behavior—evaluated through scenario analysis, probability, statistics and strict risk constraints.</p>
           </div>
 
@@ -338,17 +343,20 @@ export default function Home() {
 
       <section className="engineering section-shell section-pad" id="engineering">
         <div className="section-heading split-heading">
-          <div><p className="eyebrow">ENGINEERING / 003</p><h2>Selected<br />engineering work</h2></div>
+          <div><p className="eyebrow">ENGINEERING / 002</p><h2>Selected<br />engineering work</h2></div>
           <p>Deployed products, procedural systems and technical prototypes—each shaped around a real problem, explicit constraints and iterative validation.</p>
         </div>
         <div className="project-grid">
           {projects.map((project) => (
             <article className={`project-card ${project.featured ? "featured" : ""}`} key={project.id}>
               {project.featured && (
-                <div className="project-visual" aria-label="Procedural generation pipeline illustration">
-                  <div className="pipeline-labels"><span>SEED</span><span>GENERATE</span><span>MANAGE</span><span>INTERACT</span></div>
-                  <div className="voxel-stack" aria-hidden="true">{Array.from({ length: 24 }, (_, i) => <i key={i} />)}</div>
-                  <div className="pipeline-foot"><span>World pipeline</span><span>C# / Unity</span></div>
+                <div className="project-visual" aria-label="Images from the procedural voxel sandbox bachelor thesis">
+                  <img className="project-visual-main" src="/projects/voxel-thesis/procedural-terrain.png" alt="Procedurally generated voxel terrain with plains, water, beach and mountains" width="1097" height="502" loading="lazy" />
+                  <div className="project-visual-pair">
+                    <img src="/projects/voxel-thesis/chunk-mesh.png" alt="Generated voxel chunk mesh showing only visible faces" width="1103" height="502" loading="lazy" />
+                    <img src="/projects/voxel-thesis/gameplay-inventory.png" alt="Voxel sandbox gameplay with editable blocks and inventory" width="1158" height="651" loading="lazy" />
+                  </div>
+                  <div className="pipeline-foot"><span>Extracted from the bachelor thesis</span><span>C# / Unity</span></div>
                 </div>
               )}
               <div className="project-content">
@@ -359,12 +367,13 @@ export default function Home() {
                 <div className="project-actions">
                   <button onClick={() => setActiveProject(project)}>View case study <Arrow /></button>
                   {project.liveUrl && <a href={project.liveUrl} target="_blank" rel="noreferrer">Live site <Arrow diagonal /></a>}
+                  {project.sourceUrl && <a href={project.sourceUrl} target="_blank" rel="noreferrer">GitHub <Arrow diagonal /></a>}
                 </div>
               </div>
             </article>
           ))}
         </div>
-        <div className="additional-work"><span>ADDITIONAL WORK</span><strong>F1 Management Application</strong><span>C++ · Object-oriented programming</span></div>
+        <a className="additional-work" href="https://github.com/Silviu812/142-POPA-SILVIU-ANDREI-PROIECT-POO" target="_blank" rel="noreferrer"><span>ADDITIONAL WORK</span><strong>F1 Management Application</strong><span>C++ · Object-oriented programming <Arrow diagonal /></span></a>
       </section>
 
       <section className="foundation section-pad" id="about">
@@ -398,14 +407,14 @@ export default function Home() {
         <h2>Let’s build something that has to work <em>in the real world.</em></h2>
         <div className="contact-row">
           <div><span>LOCATION</span><strong>Constanța, Romania</strong></div>
-          <div><span>AVAILABILITY</span><strong>Open to relocation</strong></div>
-          <a className="button primary" href="https://github.com/Silviu812" target="_blank" rel="noreferrer">Start a conversation on GitHub <Arrow diagonal /></a>
+          <div><span>EMAIL</span><strong><a href="mailto:silviuandrei1056@gmail.com">silviuandrei1056@gmail.com</a></strong></div>
+          <a className="button primary" href="mailto:silviuandrei1056@gmail.com">Start a conversation <Arrow diagonal /></a>
         </div>
       </section>
 
       <footer>
         <span>© 2026 Silviu Andrei Popa</span>
-        <div><a href="https://github.com/Silviu812" target="_blank" rel="noreferrer">GitHub</a><a href="#overview">Back to top ↑</a></div>
+        <div><a href="mailto:silviuandrei1056@gmail.com">Email</a><a href="https://github.com/Silviu812" target="_blank" rel="noreferrer">GitHub</a><a href="#overview">Back to top ↑</a></div>
         <span>Built with React · Deployed on Cloudflare</span>
       </footer>
 

@@ -36,17 +36,16 @@ The included `wrangler.toml` declares the same `dist` output. `npm run build:pag
 
 These items were not supplied and are intentionally not invented or linked in the public interface:
 
-- public email address;
 - approved résumé PDF for `public/resume/`;
-- Procedural Voxel World screenshot or muted demo video;
-- Procedural Voxel World public repository URL, if public;
 - FleetOps screenshots;
 - Florance screenshots;
-- NFT marketplace repository URL and screenshots;
-- F1 Management Application repository/demo and implementation details;
+- NFT marketplace screenshots;
+- F1 Management Application demo and fuller implementation details;
 - redacted Alpha Capital evidence asset or official verification URL;
 - redacted FundedNext evidence assets or official verification URLs;
 - redacted FundingPips image for a local thumbnail (the official verification URL is already used).
+
+The profile photograph was supplied by the owner. The voxel-project visuals were extracted from the owner-provided bachelor thesis, and the public PASCraft, NFTRealm and F1 repository links were matched against the owner’s GitHub account.
 
 Suggested evidence filenames from the brief:
 
