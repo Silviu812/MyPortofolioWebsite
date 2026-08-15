@@ -19,7 +19,7 @@ npm run build
 
 ## Cloudflare deployment
 
-The default build creates both the Cloudflare Worker bundle used by Sites and a static Vite entry point for Cloudflare Pages.
+The default build detects its deployment environment. On Cloudflare Pages (`CF_PAGES=1`) it creates the static Vite site only; locally and in Sites it creates the Cloudflare Worker bundle. This prevents Pages from mistaking the Worker configuration for a Pages configuration.
 
 For a GitHub-connected Cloudflare Pages project use:
 
@@ -30,7 +30,7 @@ Root directory: /
 Production branch: main
 ```
 
-The included `wrangler.toml` declares the same `dist` output. Connect `silviupopa.dev` after the deployment succeeds and DNS ownership is available.
+The included `wrangler.toml` declares the same `dist` output. `npm run build:pages` can be used to reproduce the Pages build locally. Connect `silviupopa.dev` after the deployment succeeds and DNS ownership is available.
 
 ## Owner assets and facts still needed
 
